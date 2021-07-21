@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1626871487704.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "D4AF1AB",
+    "lastKnownWriteTime" : 1626871484,
+    "last_content_update" : 1626871484,
+    "path" : "~/ShipApp/dev/01_start.R",
+    "project_path" : "dev/01_start.R",
+    "properties" : {
+        "cursorPosition" : "11,40",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
