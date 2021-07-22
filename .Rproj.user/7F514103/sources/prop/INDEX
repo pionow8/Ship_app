@@ -7,6 +7,8 @@
 ~%2FShipApp%2Fdata-raw%2Fmy_dataset.R="BC1B44CF"
 ~%2FShipApp%2Fdev%2F01_start.R="8A8EA305"
 ~%2FShipApp%2Fdev%2F02_dev.R="21EE9473"
+~%2FShipApp%2Fdev%2F03_deploy.R="8705DE6B"
 ~%2FShipApp%2Fdev%2Frun_dev.R="3D0102AA"
 ~%2FShipApp%2Ftests%2Ftestthat%2Ftest-app.R="E2CA5CC6"
+~%2FShipApp%2Ftests%2Ftestthat%2Ftest-golem-recommended.R="7C0005C6"
 ~%2FShipApp%2Fvignettes%2FShipApp.Rmd="494AB6FC"
