@@ -3,16 +3,32 @@
 #' @param request Internal parameter for `{shiny}`. 
 #'     DO NOT REMOVE.
 #' @import shiny
+#' @import shinydashboard
 #' @noRd
 app_ui <- function(request) {
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic 
-    fluidPage(
-      h1("ShipApp"),
-      mod_name_of_module1_ui("name_of_module1_ui_1"),
-      mod_name_of_module2_ui("name_of_module2_ui_1")
+    shinydashboard::dashboardPage(
+      shinydashboard::dashboardHeader(title = "Ship application"),
+      shinydashboard::dashboardSidebar(
+        shinydashboard::sidebarMenu(
+          shinydashboard::menuItem(text = "Map", tabName = "ShipMap",
+                                   icon = icon("globe-europe"))
+        ),
+      collapsed = TRUE),
+      shinydashboard::dashboardBody(
+        shinydashboard::tabItems(
+          shinydashboard::tabItem(tabName = "ShipMap",
+                                  shiny::fluidRow(
+                                    shiny::column(
+                                      width = 12,
+                                      mod_name_of_module1_ui("name_of_module1_ui_1")
+                                    )
+                                  ))
+        )
+      )
     )
   )
 }
@@ -30,7 +46,7 @@ golem_add_external_resources <- function(){
   add_resource_path(
     'www', app_sys('app/www')
   )
- 
+  
   tags$head(
     favicon(),
     bundle_resources(
