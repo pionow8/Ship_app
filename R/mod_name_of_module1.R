@@ -7,6 +7,9 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
+
+utils::globalVariables(c("Ships_Final"))
+
 mod_name_of_module1_ui <- function(id){
   ns <- NS(id)
   tagList(
@@ -14,16 +17,14 @@ mod_name_of_module1_ui <- function(id){
                         width = 3,
                         "Dummy text", htmltools::br(),
                         htmltools::br(),
-                        shiny::radioButtons(ns("Select_sex"),
-                                            label = "Select sex",
-                                            choiceNames = c("Female", "Male"),
-                                            choiceValues = c("F", "M"),
-                                            selected = c("F")),
-                        shiny::sliderInput(ns("Bins_size"),
-                                           label = "Select size of bins",
-                                           min = 1,
-                                           max = 10,
-                                           value = 1)),
+                        shiny::selectInput(ns("Select_ship_type"),
+                                           label = "Select ship type",
+                                           choices = unique(Ships_Final$ship_type),
+                                           selected = c("Tanker")),
+                        shiny::selectInput(ns("Select_ship_name"),
+                                           label = "Select ship name",
+                                           choices = unique(Ships_Final$SHIPNAME),
+                                           selected = c("PALLAS GLORY"))),
     shinydashboard::box(title = "Histogram",
                         width = 9,
                         plotOutput(ns("plot"))
@@ -37,6 +38,11 @@ mod_name_of_module1_ui <- function(id){
 mod_name_of_module1_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    
+    # observeEvent(input$Select_ship_type, 
+    #              {updateSliderInput(session = session, inputId = "Select_ship_name", 
+    #                                 value = Ships_Final[ship_type == input$Select_ship_type]$SHIPNAME)
+    # })
     output$plot <- renderPlot({
       plot(iris)
     })
