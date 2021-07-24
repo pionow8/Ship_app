@@ -22,8 +22,7 @@ mod_name_of_module1_ui <- function(id){
                                            selected = c("Passenger")),
                         shiny::selectizeInput(ns("Select_ship_name"),
                                               label = "Select ship name",
-                                              choices = sort(unique(Ships_Final$SHIPNAME)),
-                                              selected = c("GOTA"))),
+                                              choices = NULL)),
     shinydashboard::box(title = "Map",
                         width = 10,
                         leafletOutput(ns("mymap"), height= 800)
@@ -43,7 +42,7 @@ mod_name_of_module1_server <- function(id){
       names <- subset(Ships_Final, ship_type == input$Select_ship_type)
       names <- unique(names$SHIPNAME)
       updateSelectizeInput(session = session, inputId = "Select_ship_name",
-                           choices = sort(names))
+                           choices = sort(names), selected = "AGAT")
     })
     
     datatoPlot <- reactive({

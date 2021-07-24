@@ -2,7 +2,6 @@
 
 export(run_app)
 import(data.table)
-import(htmltools)
 import(leaflet)
 import(shiny)
 import(shinydashboard)
