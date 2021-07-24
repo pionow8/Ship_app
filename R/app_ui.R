@@ -4,6 +4,7 @@
 #'     DO NOT REMOVE.
 #' @import shiny
 #' @import shinydashboard
+#' @import data.table
 #' @noRd
 app_ui <- function(request) {
   tagList(

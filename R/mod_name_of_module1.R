@@ -15,16 +15,15 @@ mod_name_of_module1_ui <- function(id){
   tagList(
     shinydashboard::box(title = "Specification",
                         width = 3,
-                        "Dummy text", htmltools::br(),
-                        htmltools::br(),
+                        "Dummy text", htmltools::br(), htmltools::br(),
                         shiny::selectInput(ns("Select_ship_type"),
                                            label = "Select ship type",
-                                           choices = unique(Ships_Final$ship_type),
-                                           selected = c("Tanker")),
-                        shiny::selectInput(ns("Select_ship_name"),
+                                           choices = sort(unique(Ships_Final$ship_type)),
+                                           selected = c("Cargo")),
+                        shiny::selectizeInput(ns("Select_ship_name"),
                                            label = "Select ship name",
-                                           choices = unique(Ships_Final$SHIPNAME),
-                                           selected = c("PALLAS GLORY"))),
+                                           choices = sort(unique(Ships_Final$SHIPNAME)),
+                                           selected = c("AALDERDIJK"))),
     shinydashboard::box(title = "Histogram",
                         width = 9,
                         plotOutput(ns("plot"))
@@ -39,19 +38,22 @@ mod_name_of_module1_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    # observeEvent(input$Select_ship_type, 
-    #              {updateSliderInput(session = session, inputId = "Select_ship_name", 
-    #                                 value = Ships_Final[ship_type == input$Select_ship_type]$SHIPNAME)
-    # })
+    observe({
+      names <- subset(Ships_Final, ship_type == input$Select_ship_type)
+      names <- unique(names$SHIPNAME)
+      updateSelectizeInput(session = session, inputId = "Select_ship_name",
+                         choices = sort(names))
+      })
     output$plot <- renderPlot({
       plot(iris)
     })
     
-  })
-}
-
-## To be copied in the UI
-# mod_name_of_module1_ui("name_of_module1_ui_1")
-
-## To be copied in the server
-# mod_name_of_module1_server("name_of_module1_ui_1")
+    })
+  }
+  
+  ## To be copied in the UI
+  # mod_name_of_module1_ui("name_of_module1_ui_1")
+  
+  ## To be copied in the server
+  # mod_name_of_module1_server("name_of_module1_ui_1")
+  
