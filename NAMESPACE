@@ -2,6 +2,7 @@
 
 export(run_app)
 import(data.table)
+import(leaflet)
 import(shiny)
 import(shinydashboard)
 importFrom(golem,activate_js)

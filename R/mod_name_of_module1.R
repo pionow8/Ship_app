@@ -21,11 +21,14 @@ mod_name_of_module1_ui <- function(id){
                                            choices = sort(unique(Ships_Final$ship_type)),
                                            selected = c("Cargo")),
                         shiny::selectizeInput(ns("Select_ship_name"),
-                                           label = "Select ship name",
-                                           choices = sort(unique(Ships_Final$SHIPNAME)),
-                                           selected = c("AALDERDIJK"))),
+                                              label = "Select ship name",
+                                              choices = sort(unique(Ships_Final$SHIPNAME)),
+                                              selected = c("AALDERDIJK"))),
     shinydashboard::box(title = "Histogram",
-                        width = 9,
+                        width = 1,
+                        textOutput(ns("selected_var"))),
+    shinydashboard::box(title = "Histogram2",
+                        width = 7,
                         plotOutput(ns("plot"))
     )
   )
@@ -42,18 +45,37 @@ mod_name_of_module1_server <- function(id){
       names <- subset(Ships_Final, ship_type == input$Select_ship_type)
       names <- unique(names$SHIPNAME)
       updateSelectizeInput(session = session, inputId = "Select_ship_name",
-                         choices = sort(names))
-      })
+                           choices = sort(names))
+    })
+    
+    datatoPlot <- reactive({
+      Ships_Final <- Ships_Final[SHIPNAME == input$Select_ship_name]$SHIPNAME
+    })
+    
+    output$selected_var <- renderText({ 
+      paste("You have selected", datatoPlot())
+    })
+    
+    
+    
+    
+    # output$mymap <- renderLeaflet({
+    #   leaflet(datatoPlot()) %>%
+    #     addTiles() %>%
+    #     addMarkers(lng = ~lng, lat = ~lat, popup = popupa)
+    # }) 
+    
+    
+    
     output$plot <- renderPlot({
       plot(iris)
     })
     
-    })
-  }
-  
-  ## To be copied in the UI
-  # mod_name_of_module1_ui("name_of_module1_ui_1")
-  
-  ## To be copied in the server
-  # mod_name_of_module1_server("name_of_module1_ui_1")
-  
+  })
+}
+
+## To be copied in the UI
+# mod_name_of_module1_ui("name_of_module1_ui_1")
+
+## To be copied in the server
+# mod_name_of_module1_server("name_of_module1_ui_1")
