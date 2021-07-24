@@ -14,22 +14,19 @@ mod_name_of_module1_ui <- function(id){
   ns <- NS(id)
   tagList(
     shinydashboard::box(title = "Specification",
-                        width = 3,
+                        width = 2,
                         "Dummy text", htmltools::br(), htmltools::br(),
                         shiny::selectInput(ns("Select_ship_type"),
                                            label = "Select ship type",
                                            choices = sort(unique(Ships_Final$ship_type)),
-                                           selected = c("Cargo")),
+                                           selected = c("Passenger")),
                         shiny::selectizeInput(ns("Select_ship_name"),
                                               label = "Select ship name",
                                               choices = sort(unique(Ships_Final$SHIPNAME)),
-                                              selected = c("AALDERDIJK"))),
-    shinydashboard::box(title = "Histogram",
-                        width = 1,
-                        textOutput(ns("selected_var"))),
-    shinydashboard::box(title = "Histogram2",
-                        width = 7,
-                        leafletOutput(ns("mymap"))
+                                              selected = c("GOTA"))),
+    shinydashboard::box(title = "Map",
+                        width = 10,
+                        leafletOutput(ns("mymap"), height= 800)
     )
   )
 }
@@ -60,13 +57,17 @@ mod_name_of_module1_server <- function(id){
     output$mymap <- renderLeaflet({
       leaflet(datatoPlot()) %>%
         addTiles() %>%
-        addMarkers(lng = ~LON, lat = ~LAT)
+        addMarkers(lng = ~LON, lat = ~LAT, 
+                   popup = paste0("<b>Ship name: </b>", input$Select_ship_name,  "<br>",
+                                  "<b>Longitude: </b>", round(datatoPlot()$LON, 2), "<br>",
+                                  "<b>Latitude: </b>", round(datatoPlot()$LAT, 2), "<br>",
+                                  "<b>Distance: </b>", round(datatoPlot()$DISTANCE, 2)," m")) %>%
+        addMarkers(lng = ~LON0, lat = ~LAT0, 
+                   popup = paste0("<b>Ship name: </b>", input$Select_ship_name,  "<br>",
+                                  "<b>Longitude: </b>", round(datatoPlot()$LON0, 2), "<br>",
+                                  "<b>Latitude: </b>", round(datatoPlot()$LAT0, 2), "<br>",
+                                  "<b>Distance: </b>", round(datatoPlot()$DISTANCE, 2)," m"))
     })
-    
-    output$plot <- renderPlot({
-      plot(iris)
-    })
-    
   })
 }
 
