@@ -29,7 +29,7 @@ mod_name_of_module1_ui <- function(id){
                         textOutput(ns("selected_var"))),
     shinydashboard::box(title = "Histogram2",
                         width = 7,
-                        plotOutput(ns("plot"))
+                        leafletOutput(ns("mymap"))
     )
   )
 }
@@ -42,6 +42,7 @@ mod_name_of_module1_server <- function(id){
     ns <- session$ns
     
     observe({
+      ## should be changed to data.table
       names <- subset(Ships_Final, ship_type == input$Select_ship_type)
       names <- unique(names$SHIPNAME)
       updateSelectizeInput(session = session, inputId = "Select_ship_name",
@@ -49,23 +50,18 @@ mod_name_of_module1_server <- function(id){
     })
     
     datatoPlot <- reactive({
-      Ships_Final <- Ships_Final[SHIPNAME == input$Select_ship_name]$SHIPNAME
+      Ships_Final <- Ships_Final[SHIPNAME == input$Select_ship_name]
     })
     
     output$selected_var <- renderText({ 
-      paste("You have selected", datatoPlot())
+      paste("You have selected", datatoPlot()$SHIPNAME)
     })
     
-    
-    
-    
-    # output$mymap <- renderLeaflet({
-    #   leaflet(datatoPlot()) %>%
-    #     addTiles() %>%
-    #     addMarkers(lng = ~lng, lat = ~lat, popup = popupa)
-    # }) 
-    
-    
+    output$mymap <- renderLeaflet({
+      leaflet(datatoPlot()) %>%
+        addTiles() %>%
+        addMarkers(lng = ~LON, lat = ~LAT)
+    })
     
     output$plot <- renderPlot({
       plot(iris)
