@@ -16,10 +16,12 @@ app_ui <- function(request) {
       shinydashboard::dashboardHeader(title = "Ship application"),
       shinydashboard::dashboardSidebar(
         shinydashboard::sidebarMenu(
-          shinydashboard::menuItem(text = "Map", tabName = "ShipMap",
-                                   icon = icon("globe-europe"))
+          shinydashboard::menuItem(
+            text = "Map", tabName = "ShipMap",
+            icon = icon("globe-europe")
+          )
         ),
-      collapsed = TRUE),
+        disable = TRUE),
       shinydashboard::dashboardBody(
         shinydashboard::tabItems(
           shinydashboard::tabItem(tabName = "ShipMap",

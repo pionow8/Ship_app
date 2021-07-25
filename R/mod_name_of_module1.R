@@ -15,7 +15,9 @@ mod_name_of_module1_ui <- function(id){
   tagList(
     shinydashboard::box(title = "Specification",
                         width = 2,
-                        "Dummy text", htmltools::br(), htmltools::br(),
+                        paste0("App is showing longest distance between two",
+                               " consecutive observations for selected ship by type and name"),
+                        htmltools::br(), htmltools::br(),
                         shiny::selectInput(ns("Select_ship_type"),
                                            label = "Select ship type",
                                            choices = sort(unique(Ships_Final$ship_type)),
@@ -65,7 +67,9 @@ mod_name_of_module1_server <- function(id){
                    popup = paste0("<b>Ship name: </b>", input$Select_ship_name,  "<br>",
                                   "<b>Longitude: </b>", round(datatoPlot()$LON0, 2), "<br>",
                                   "<b>Latitude: </b>", round(datatoPlot()$LAT0, 2), "<br>",
-                                  "<b>Distance: </b>", round(datatoPlot()$DISTANCE, 2)," m"))
+                                  "<b>Distance: </b>", round(datatoPlot()$DISTANCE, 2)," m")) %>%
+        addPolylines(lng = c(datatoPlot()$LON, datatoPlot()$LON0),
+                     lat = c(datatoPlot()$LAT, datatoPlot()$LAT0))
     })
   })
 }
