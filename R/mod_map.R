@@ -1,4 +1,4 @@
-#' map_mod UI Function
+#' map UI Function
 #'
 #' @description A shiny Module.
 #'
@@ -10,7 +10,7 @@
 
 utils::globalVariables(c("Ships_Final"))
 
-mod_map_mod_ui <- function(id){
+mod_map_ui <-function(id){
   ns <- NS(id)
   tagList(
     shinydashboard::box(title = "Specification",
@@ -36,11 +36,11 @@ mod_map_mod_ui <- function(id){
   )
 }
 
-    
-#' map_mod Server Functions
+
+#' map Server Functions
 #'
 #' @noRd 
-mod_map_mod_server <- function(id){
+mod_map_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
@@ -76,9 +76,9 @@ mod_map_mod_server <- function(id){
     })
   })
 }
-    
+
 ## To be copied in the UI
-# mod_map_mod_ui("map_mod_ui_1")
-    
+# mod_map_ui("map_ui_1")
+
 ## To be copied in the server
-# mod_map_mod_server("map_mod_ui_1")
+# mod_map_server("map_ui_1")
