@@ -1,4 +1,4 @@
-#' name_of_module1 UI Function
+#' map_mod UI Function
 #'
 #' @description A shiny Module.
 #'
@@ -10,12 +10,12 @@
 
 utils::globalVariables(c("Ships_Final"))
 
-mod_name_of_module1_ui <- function(id){
+mod_map_mod_ui <- function(id){
   ns <- NS(id)
   tagList(
     shinydashboard::box(title = "Specification",
                         width = 2,
-                        paste0("App is showing longest distance between two",
+                        paste0("The app is showing longest distance between two",
                                " consecutive observations for selected ship by type and name."),
                         htmltools::br(),
                         paste0("The line between the points is indicative and auxiliary.", 
@@ -36,10 +36,11 @@ mod_name_of_module1_ui <- function(id){
   )
 }
 
-#' name_of_module1 Server Functions
+    
+#' map_mod Server Functions
 #'
 #' @noRd 
-mod_name_of_module1_server <- function(id){
+mod_map_mod_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
@@ -75,9 +76,9 @@ mod_name_of_module1_server <- function(id){
     })
   })
 }
-
+    
 ## To be copied in the UI
-# mod_name_of_module1_ui("name_of_module1_ui_1")
-
+# mod_map_mod_ui("map_mod_ui_1")
+    
 ## To be copied in the server
-# mod_name_of_module1_server("name_of_module1_ui_1")
+# mod_map_mod_server("map_mod_ui_1")

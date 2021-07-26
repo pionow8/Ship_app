@@ -29,7 +29,7 @@ app_ui <- function(request) {
                                   shiny::fluidRow(
                                     shiny::column(
                                       width = 12,
-                                      mod_name_of_module1_ui("name_of_module1_ui_1")
+                                      mod_map_mod_ui("map_mod_ui_1")
                                     )
                                   ))
         )
