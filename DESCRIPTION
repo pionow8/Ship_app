@@ -2,17 +2,20 @@ Package: ShipApp
 Title: Ship app package
 Version: 0.0.0.9000
 Authors@R: person('Piotr', 'Nowosielski', email = 'pio.nowosielski@gmail.com', role = c('cre', 'aut'))
-Description: Demo app vizualising ship location.
+Description: Demo app visualizing ship location.
 License: MIT + file LICENSE
 Imports: 
     attempt,
     config (>= 0.3.1),
+    data.table,
     DT,
     glue,
     golem (>= 0.3.1),
     htmltools,
+    leaflet,
     processx,
-    shiny (>= 1.6.0)
+    shiny (>= 1.6.0),
+    shinydashboard
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1

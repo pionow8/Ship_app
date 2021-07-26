@@ -8,7 +8,7 @@
 #'
 #' @importFrom shiny NS tagList 
 
-utils::globalVariables(c("Ships_Final"))
+utils::globalVariables(c("Ships_Final", "SHIPNAME", "ship_type"))
 
 mod_map_ui <-function(id){
   ns <- NS(id)
