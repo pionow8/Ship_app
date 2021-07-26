@@ -16,7 +16,7 @@ mod_name_of_module1_ui <- function(id){
     shinydashboard::box(title = "Specification",
                         width = 2,
                         paste0("App is showing longest distance between two",
-                               " consecutive observations for selected ship by type and name"),
+                               " consecutive observations for selected ship by type and name."),
                         htmltools::br(), htmltools::br(),
                         shiny::selectInput(ns("Select_ship_type"),
                                            label = "Select ship type",
@@ -40,11 +40,13 @@ mod_name_of_module1_server <- function(id){
     ns <- session$ns
     
     observe({
-      ## should be changed to data.table
-      names <- subset(Ships_Final, ship_type == input$Select_ship_type)
-      names <- unique(names$SHIPNAME)
+      names <- Ships_Final[ship_type == input$Select_ship_type]$SHIPNAME
       updateSelectizeInput(session = session, inputId = "Select_ship_name",
-                           choices = sort(names), selected = "AGAT")
+                           choices = sort(names), 
+                           selected = c("AGAT", "ENSKAR", "MINERVA",
+                                        "KAPER-2 SG-312", "RIVO", "BY GD", 
+                                        "ZAWISZA CZARNY", "INDIAN POINT",
+                                        "AKADEMIK KARPINSKIY", "BARSWEEP ONE"))
     })
     
     datatoPlot <- reactive({
