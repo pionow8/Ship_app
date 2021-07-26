@@ -6,6 +6,7 @@
 #' @import shinydashboard
 #' @import data.table
 #' @import leaflet
+#' @import htmltools
 #' @noRd
 app_ui <- function(request) {
   tagList(
