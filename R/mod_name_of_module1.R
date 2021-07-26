@@ -51,10 +51,6 @@ mod_name_of_module1_server <- function(id){
       Ships_Final <- Ships_Final[SHIPNAME == input$Select_ship_name]
     })
     
-    output$selected_var <- renderText({ 
-      paste("You have selected", datatoPlot()$SHIPNAME)
-    })
-    
     output$mymap <- renderLeaflet({
       leaflet(datatoPlot()) %>%
         addTiles() %>%
