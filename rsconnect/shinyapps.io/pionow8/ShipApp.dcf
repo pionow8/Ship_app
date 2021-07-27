@@ -1,0 +1,13 @@
+name: ShipApp
+title: ShipApp
+username:
+account: pionow8
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4428114
+bundleId: 4859699
+url: https://pionow8.shinyapps.io/ShipApp/
+when: 1627378030.21563
+lastSyncTime: 1627378030.21563
+asMultiple: FALSE
+asStatic: FALSE

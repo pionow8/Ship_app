@@ -10,3 +10,5 @@ $run_dev.*
 ^Meta$
 ^Dockerfile$
 ^\.dockerignore$
+^app\.R$
+^rsconnect$
