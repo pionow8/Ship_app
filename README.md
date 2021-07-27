@@ -7,18 +7,16 @@
 
 <!-- badges: end -->
 
-The goal of ShipApp is to …
+The goal of ShipApp is to visualize on the map the longest distance
+between two consecutive observations for every ship. The app marks it on
+the map. When clicking a marker user is able to see detailed info about
+the cruise. Aditionally app enables user to filter ships by type and
+name.
 
 ## Installation
 
-You can install the released version of ShipApp from
-[CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("ShipApp")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+You can install the released version of ShipApp version from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -32,7 +30,10 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(ShipApp)
 ## basic example code
+ShipApp::run_app()
 ```
+
+<div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div>
 
 What is special about using `README.Rmd` instead of just `README.md`?
 You can include R chunks like so:
