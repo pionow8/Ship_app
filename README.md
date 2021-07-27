@@ -8,10 +8,11 @@
 <!-- badges: end -->
 
 The goal of ShipApp is to visualize on the map the longest distance
-between two consecutive observations for every ship. The app marks it on
-the map. When clicking a marker user is able to see detailed info about
-the cruise. Aditionally app enables user to filter ships by type and
-name.
+between two consecutive observations for every ship in given dataset.
+The app marks points on the map. When clicking a marker user is able to
+see detailed info about the cruise (i.e. ship name, geocoordinates and
+sailed distance in meters). Additionally app enables user to filter
+ships by type and name.
 
 ## Installation
 
@@ -33,31 +34,44 @@ library(ShipApp)
 ShipApp::run_app()
 ```
 
-<div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div>
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+## Data preprocessing
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+library(data.table)
+library(rworldmap)
+library(geosphere)
+
+## read ship data
+dt <- data.table(read.csv2("~/ships.csv", 
+                           sep = ",", 
+                           header = TRUE,
+                           encoding = "UTF-8"))
+
+## add coordinates of previous location
+dt[, LAT0:=c(NA, LAT[-.N]), by=SHIP_ID]
+dt[, LON0:=c(NA, LON[-.N]), by=SHIP_ID]
+
+## change lon and lat varibles to numeric
+dt$LAT <- as.numeric(dt$LAT)
+dt$LON <- as.numeric(dt$LON)
+dt$LAT0 <- as.numeric(dt$LAT0)
+dt$LON0 <- as.numeric(dt$LON0)
+
+## count distance with Haversine methode
+dt$DISTANCE <- distHaversine(p1 = dt[, c('LON0', 'LAT0')],
+                             p2 = dt[, c('LON', 'LAT')])
+
+## choose only max for each ship
+dt2 <- unique(dt[dt[, .I[DISTANCE == max(DISTANCE, na.rm = TRUE)], by=SHIP_ID]$V1])
+
+## change DATETIME variable as date
+dt2$DATETIME <- as.POSIXct(dt2$DATETIME)
+
+## sort by date and ship ID
+dt2 <- dt2[order(SHIP_ID, -DATETIME)]
+
+## take only most recent observation for each ship
+dt2 <- dt2[, head(.SD, 1), by = "SHIP_ID"]
+
+saveRDS(dt2, "~/Ships_Final.RDS")
 ```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/master/examples>.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
