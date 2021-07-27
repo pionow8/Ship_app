@@ -9,10 +9,15 @@
 
 The goal of ShipApp is to visualize on the map the longest distance
 between two consecutive observations for every ship in given dataset.
-The app marks points on the map. When clicking a marker user is able to
-see detailed info about the cruise (i.e. ship name, geocoordinates and
-sailed distance in meters). Additionally app enables user to filter
-ships by type and name.
+The app marks two points on the map. When clicking a marker user is able
+to see detailed info about the cruise (i.e. ship name, geocoordinates
+and sailed distance in meters). Additionally the app enables user to
+filter ships by type and name.
+
+## Availability
+
+The app is available for user on
+[shinyapps.io](https://pionow8.shinyapps.io/ShipApp/) website.
 
 ## Installation
 
@@ -20,7 +25,7 @@ You can install the released version of ShipApp version from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
+## install.packages("devtools")
 devtools::install_github("pionow8/Ship_app")
 ```
 
@@ -37,9 +42,9 @@ ShipApp::run_app()
 ## Data preprocessing
 
 ``` r
-library(data.table)
-library(rworldmap)
-library(geosphere)
+library("data.table")
+library("rworldmap")
+library("geosphere")
 
 ## read ship data
 dt <- data.table(read.csv2("~/ships.csv", 
@@ -48,8 +53,8 @@ dt <- data.table(read.csv2("~/ships.csv",
                            encoding = "UTF-8"))
 
 ## add coordinates of previous location
-dt[, LAT0:=c(NA, LAT[-.N]), by=SHIP_ID]
-dt[, LON0:=c(NA, LON[-.N]), by=SHIP_ID]
+dt[, LAT0:= c(NA, LAT[-.N]), by=SHIP_ID]
+dt[, LON0:= c(NA, LON[-.N]), by=SHIP_ID]
 
 ## change lon and lat varibles to numeric
 dt$LAT <- as.numeric(dt$LAT)
@@ -61,17 +66,22 @@ dt$LON0 <- as.numeric(dt$LON0)
 dt$DISTANCE <- distHaversine(p1 = dt[, c('LON0', 'LAT0')],
                              p2 = dt[, c('LON', 'LAT')])
 
-## choose only max for each ship
-dt2 <- unique(dt[dt[, .I[DISTANCE == max(DISTANCE, na.rm = TRUE)], by=SHIP_ID]$V1])
+## choose max observation for each ship
+dt <- unique(dt[dt[, .I[DISTANCE == max(DISTANCE, na.rm = TRUE)], by=SHIP_ID]$V1])
 
-## change DATETIME variable as date
-dt2$DATETIME <- as.POSIXct(dt2$DATETIME)
+## change DATETIME variable to date
+dt$DATETIME <- as.POSIXct(dt$DATETIME)
 
-## sort by date and ship ID
-dt2 <- dt2[order(SHIP_ID, -DATETIME)]
+## sort by SHIP_ID and DATETIME variables
+dt <- dt[order(SHIP_ID, -DATETIME)]
 
-## take only most recent observation for each ship
-dt2 <- dt2[, head(.SD, 1), by = "SHIP_ID"]
+## take only the most recent observation for each ship
+dt <- dt[, head(.SD, 1), by = "SHIP_ID"]
 
-saveRDS(dt2, "~/Ships_Final.RDS")
+saveRDS(dt, "~/Ships_Final.RDS")
 ```
+
+## Conclusions
+
+The app should be a helpful tool for port employees. Enabling them to
+see ah-hoc ship localization and be a good tool for further analyses.
