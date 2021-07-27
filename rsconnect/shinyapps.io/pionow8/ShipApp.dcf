@@ -5,9 +5,9 @@ account: pionow8
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4428114
-bundleId: 4859699
+bundleId: 4861202
 url: https://pionow8.shinyapps.io/ShipApp/
-when: 1627378030.21563
-lastSyncTime: 1627378030.21563
+when: 1627408949.94297
+lastSyncTime: 1627408949.94297
 asMultiple: FALSE
 asStatic: FALSE

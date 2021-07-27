@@ -10,7 +10,7 @@
 #' @noRd
 app_ui <- function(request) {
   tagList(
-
+    
     # Your application UI logic
     shinydashboard::dashboardPage(
       shinydashboard::dashboardHeader(title = "Ship application"),

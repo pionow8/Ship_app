@@ -43,7 +43,7 @@ mod_map_ui <- function(id) {
 mod_map_server <- function(id) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
-
+    
     observe({
       names <- Ships_Final[ship_type == input$Select_ship_type]$SHIPNAME
       updateSelectizeInput(session = session, inputId = "Select_ship_name",
@@ -53,11 +53,11 @@ mod_map_server <- function(id) {
                                         "ZAWISZA CZARNY", "INDIAN POINT",
                                         "AKADEMIK KARPINSKIY", "BARSWEEP ONE"))
     })
-
+    
     data_to_map <- reactive({
       Ships_Final <- Ships_Final[SHIPNAME == input$Select_ship_name]
     })
-
+    
     output$mymap <- renderLeaflet({
       leaflet(data_to_map()) %>%
         addTiles() %>%
