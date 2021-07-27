@@ -1,6 +1,6 @@
 #' The application User-Interface
-#' 
-#' @param request Internal parameter for `{shiny}`. 
+#'
+#' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
 #' @import shiny
 #' @import shinydashboard
@@ -10,8 +10,8 @@
 #' @noRd
 app_ui <- function(request) {
   tagList(
-    
-    # Your application UI logic 
+
+    # Your application UI logic
     shinydashboard::dashboardPage(
       shinydashboard::dashboardHeader(title = "Ship application"),
       shinydashboard::dashboardSidebar(
@@ -36,4 +36,3 @@ app_ui <- function(request) {
     )
   )
 }
-
